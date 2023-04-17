@@ -1,0 +1,61 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-languruapp-staging-30214-authRole",
+      "UnauthRoleArn": "arn:aws:iam::552406705764:role/amplify-languruapp-staging-30214-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::552406705764:role/amplify-languruapp-staging-30214-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-languruapp-staging-30214-deployment",
+      "UnauthRoleName": "amplify-languruapp-staging-30214-unauthRole",
+      "StackName": "amplify-languruapp-staging-30214",
+      "StackId": "arn:aws:cloudformation:us-east-1:552406705764:stack/amplify-languruapp-staging-30214/6d66b3e0-d8de-11ed-a5a1-0ed24e715247",
+      "AmplifyAppId": "d3ew6glzat4w5j"
+    }
+  },
+  "auth": {
+    "languruapp": {
+      "customAuth": false,
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE",
+            "REQUIRES_NUMBERS",
+            "REQUIRES_SYMBOLS",
+            "REQUIRES_UPPERCASE"
+          ]
+        },
+        "signupAttributes": [
+          "EMAIL",
+          "NAME"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
+      "output": {
+        "UserPoolId": "us-east-1_zQrzoCoE4",
+        "AppClientIDWeb": "21e9e3rmuicisug7hrvc2s4r3q",
+        "AppClientID": "17dp92q6mb3ppve6hk33g4rg1d",
+        "IdentityPoolId": "us-east-1:07979d08-8732-406a-9835-406428dbf8b8",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:552406705764:userpool/us-east-1_zQrzoCoE4",
+        "IdentityPoolName": "testAuthIdentityPool__staging",
+        "UserPoolName": "languruapp"
+      },
+      "lastPushTimeStamp": "2023-04-12T03:21:16.366Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-languruapp-staging-30214-deployment/amplify-cfn-templates/auth/languruapp-cloudformation-template.json",
+        "logicalId": "authlanguruapp"
+      }
+    }
+  }
+}
