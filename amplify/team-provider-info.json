@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-languruapp-staging-30214-authRole",
+      "UnauthRoleArn": "arn:aws:iam::552406705764:role/amplify-languruapp-staging-30214-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::552406705764:role/amplify-languruapp-staging-30214-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-languruapp-staging-30214-deployment",
+      "UnauthRoleName": "amplify-languruapp-staging-30214-unauthRole",
+      "StackName": "amplify-languruapp-staging-30214",
+      "StackId": "arn:aws:cloudformation:us-east-1:552406705764:stack/amplify-languruapp-staging-30214/6d66b3e0-d8de-11ed-a5a1-0ed24e715247",
+      "AmplifyAppId": "d3ew6glzat4w5j"
+    },
+    "categories": {
+      "auth": {
+        "languruapp": {}
+      }
+    }
+  }
+}
