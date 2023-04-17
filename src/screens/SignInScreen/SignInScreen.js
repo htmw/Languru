@@ -29,7 +29,6 @@ const SignInScreen = () => {
 
     try {
       const response = await Auth.signIn(data.username, data.password);
-      console.log(response);
       navigation.navigate('Home');
     } catch(e) {
       Alert.alert('Oops', e.message);
