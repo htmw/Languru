@@ -12,6 +12,8 @@ const BasicScreen = () => {
     const [result, setResult] = useState([]);
     const [score, setScore] = useState({});
 
+    const [point, setPoint] = useState();
+
     const startRecording = async () => {
         try {
             const permission = await Audio.requestPermissionsAsync();
@@ -93,7 +95,7 @@ const BasicScreen = () => {
                     console.log(response);
                     updatedResults.push(response);
                     setScore(response);
-                    setResult(JSON.stringify(response));
+                    setPoint(response.score);
                     setResults(updatedResults);
                 })
                 .catch(err => console.error(err));
@@ -104,6 +106,7 @@ const BasicScreen = () => {
     }
 
     const addPost = () => {
+        // Use Quote Generation API to get a random 
         setTextToRead('Show me the money.');
     }
 
@@ -124,8 +127,8 @@ const BasicScreen = () => {
             {textToRead == '' ? null : <Button
                 title={recording ? 'Stop Recording' : 'Start Recording'}
                 onPress={recording ? stopRecording : startRecording} />}
-            {result == '' ? null : <Text
-            style={{fontSize: 12, alignSelf: 'center'}}>{result}</Text>}
+            {point == null ? null : <Text
+            style={{fontSize: 12, alignSelf: 'center'}}>Overall Score: {point}</Text>}
             
         </View>
     );
