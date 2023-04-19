@@ -23,7 +23,6 @@ const SignUpScreen = () => {
         password,
         attributes: {email, name, preferred_username:username},
       });
-      console.log(response);
       navigation.navigate('ConfirmEmail', {username});
     } catch (e) {
       Alert.alert('Oops', e.message);

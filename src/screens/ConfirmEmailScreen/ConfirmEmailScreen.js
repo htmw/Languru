@@ -12,7 +12,7 @@ import {Auth} from 'aws-amplify';
 const ConfirmEmailScreen = () => {
   const route = useRoute();
   const {control, handleSubmit, watch} = useForm({
-    defaultValues: {username: route?.params?.username}
+    defaultValues: {username: route?.params.username}
   });
 
   const navigation = useNavigation();

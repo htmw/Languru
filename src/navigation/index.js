@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -19,6 +19,7 @@ import WorkScreen from '../screens/WorkScreen';
 import EducationScreen from '../screens/EducationScreen';
 import HealthScreen from '../screens/HealthScreen';
 import FoodScreen from '../screens/FoodScreen';
+import { Auth } from 'aws-amplify';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -32,19 +33,22 @@ const Navigation = () => {
         <Stack.Screen name="ConfirmEmail" component={ConfirmEmailScreen} />
         <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
         <Stack.Screen name="NewPassword" component={NewPasswordScreen} />
-        <Stack.Screen name="Home" component={TabNavigator} />
+        <Stack.Screen name="TabNavigator" component={TabNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-export function TabNavigator() {
+export function TabNavigator({ route, navigation }) {
+  console.log(route);
+  const params = route.params.params;
   return (
         <Tab.Navigator
+        initialRouteName = "Home"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
-
+            // console.log(route);
             if (route.name === 'Home') {
               iconName = focused
                 ? 'ios-home'
@@ -53,7 +57,7 @@ export function TabNavigator() {
               iconName = focused ? 'ios-list' : 'ios-list-outline';
             } else if (route.name === 'Profile') {
               iconName = 'ios-person-circle';
-            } else if (route.name === 'Record') {
+            } else if (route.name === 'Training') {
               iconName = 'ios-recording';
             }
 
@@ -62,10 +66,11 @@ export function TabNavigator() {
           },
           tabBarActiveTintColor: 'tomato',
           tabBarInactiveTintColor: 'gray',
-        })}>
-           <Tab.Screen name='Home' component={HomeScreen}/>
-           <Tab.Screen name='Record' component={RecordScreenNavigator}/>
-           <Tab.Screen name='Profile' component={ProfileScreen}/>
+        })}
+        >
+           <Tab.Screen name='Home' component={HomeScreen} />
+           <Tab.Screen name='Training' component={RecordScreenNavigator} />
+           <Tab.Screen name='Profile' component={ProfileScreen} initialParams={{params}}/>
            <Tab.Screen name='Settings' component={SettingScreen}/>
         </Tab.Navigator>
    )
@@ -73,7 +78,7 @@ export function TabNavigator() {
 
 export function RecordScreenNavigator() {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator initialRouteName = "Record" screenOptions={{headerShown: false}}>
       <Stack.Screen name='Record' component={RecordScreen}/>
       <Stack.Screen name="Basic" component={BasicScreen} />
       <Stack.Screen name="Life" component={LifeScreen} />
