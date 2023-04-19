@@ -3,37 +3,57 @@ import {View, Text, Alert, Pressable} from 'react-native';
 import { Card, Icon } from 'react-native-elements'
 import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import {useForm} from 'react-hook-form';
+import {Auth} from 'aws-amplify';
+import CustomInput from '../../components/CustomInput';
+import CustomButton from '../../components/CustomButton';
 
+const EMAIL_REGEX = /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/;
 
+const ProfileScreen = ({ route, navigation }) => {
+    const {control, handleSubmit} = useForm();
+    const [username, onChangeUserName] = React.useState(route.params.params.userName);
+    const [name, onChangeName] = React.useState(route.params.params.name);
+    const [email, onChangeEmail] = React.useState(route.params.params.email);
+    const [number, onChangeNumber] = React.useState(route.params.params.phone_number);
 
-
-const ProfileScreen = (props) => {
-    const [username, onChangeUserName] = React.useState('musa');
-    const [name, onChangeName] = React.useState('Musa Tarar');
-    const [email, onChangeEmail] = React.useState('musansht@gmail.com');
-    const [number, onChangeNumber] = React.useState('0321 8338181');
-    const [buttonText, onChangeButtonText] = React.useState('Update Profile');
-    const sendAlert = (me) => {
-        console.log(me.value)
-        Alert.alert('Update Profile', 'Confirm changes to profile?', [
-        {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-        },
-        {text: 'OK', onPress: () => onChangeButtonText('Successfully updated')},
-        ]); 
+    const onUpdateProfilePress = async () => {
+        console.log(username);
+        console.log(email);
+        if(!validateEmail(email)) {
+            Alert.alert('Please enter a valid email.');
+        } else if(!username || !name) {
+            Alert.alert('Username and Name cannot be empty.');
+        } else {
+            try {
+                const user = await Auth.currentAuthenticatedUser();
+                await Auth.updateUserAttributes(user, {
+                    'preferred_username': username,
+                    'name': name,
+                    'email': email,
+                    'phone_number': number,
+                });
+                Alert.alert('Successfully updated profile.');
+            } catch (e) {
+                Alert.alert('Error', e.message);
+            }
+        }
     }
+
+    const validateEmail = (text) => {
+        return EMAIL_REGEX.test(text);
+    };
 
     return (
         <View style={{flex: 1, alignItems: 'center'}}>
-            <Text style={{fontSize: 24, alignSelf: 'center'}}>Hi Musa, welcome to your profile</Text>
+            <Text style={{fontSize: 24, alignSelf: 'center'}}>Hi {name}, welcome to your profile</Text>
             <View style={styles.row}>
                 <Text>Username:</Text>
                 <TextInput
                     style={styles.input}
                     onChangeText={onChangeUserName}
                     value={username}
+                    control={control}
                 />
             </View>
             <View style={styles.row}>
@@ -42,6 +62,7 @@ const ProfileScreen = (props) => {
                     style={styles.input}
                     onChangeText={onChangeName}
                     value={name}
+                    control={control}
                 />
             </View>
             <View style={styles.row}>
@@ -50,6 +71,7 @@ const ProfileScreen = (props) => {
                     style={styles.input}
                     onChangeText={onChangeEmail}
                     value={email}
+                    control={control}
                 />
             </View>
             <View style={styles.row}>
@@ -58,11 +80,14 @@ const ProfileScreen = (props) => {
                     style={styles.input}
                     onChangeText={onChangeNumber}
                     value={number}
+                    control={control}
                 />
             </View>
-            <Pressable style={styles.button} onPress={sendAlert} text = {"Update"}>
-                <Text>{buttonText}</Text>
-            </Pressable>
+            
+            <CustomButton
+                text="Update Profile"
+                onPress={handleSubmit(onUpdateProfilePress)}
+            />
         </View>
         
     );

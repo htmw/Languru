@@ -15,21 +15,38 @@ import SocialSignInButtons from '../../components/SocialSignInButtons';
 import {useNavigation} from '@react-navigation/native';
 import { Auth } from 'aws-amplify';
 import {useForm, Controller} from 'react-hook-form';
+import { useRoute } from "@react-navigation/native";
 
-const SignInScreen = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const SignInScreen = ({navigation}) => {
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
   const {control, handleSubmit, formState: {errors}} = useForm();
 
   const {height} = useWindowDimensions();
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
+
 
   const onSignInPressed = async data => {
 
     try {
       const response = await Auth.signIn(data.username, data.password);
-      navigation.navigate('Home');
+      const userInfo = await Auth.currentUserInfo();
+      console.log(userInfo);
+      const userName = userInfo.username;
+      const name = userInfo.attributes.name;
+      const email = userInfo.attributes.email;
+      const phone_number = userInfo.attributes.phone_number;
+
+      navigation.navigate('TabNavigator', {
+        screen: 'Home',
+        params: {
+          userName: userName,
+          name: name,
+          email: email,
+          phone_number: phone_number,
+        }
+      });
     } catch(e) {
       Alert.alert('Oops', e.message);
     }
