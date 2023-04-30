@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {View, Text, Alert, Button, StyleSheet} from 'react-native';
 import { Audio } from 'expo-av';
+import Config from '../../../config';
 
 const BasicScreen = () => {
 
@@ -11,12 +12,11 @@ const BasicScreen = () => {
     const [results, setResults] = useState([]);
     const [result, setResult] = useState([]);
     const [score, setScore] = useState({});
-
-    const [point, setPoint] = useState();
+    const [ipa, setIpa] = useState('');
 
     const startRecording = async () => {
         try {
-            const permission = await Audio.requestPermissionsAsync();
+            const permission = await Audio.requestPermissionsAsync();// allow app to use phone's microphone
             if (permission.status === "granted") {
                 await Audio.setAudioModeAsync({
                   allowsRecordingIOS: true,
@@ -92,10 +92,19 @@ const BasicScreen = () => {
             await fetch('https://pronunciation-assessment1.p.rapidapi.com/pronunciation', options)
                 .then(response => response.json())
                 .then(response => {
-                    console.log(response);
+                    console.log(JSON.stringify(response));
                     updatedResults.push(response);
-                    setScore(response);
-                    setPoint(response.score);
+                    setScore(response.score);
+                    const word = response.words[0];
+                    console.log(response.words[0]);
+                    var phonetic = '/';
+                    word.syllables.map((syllable, index) => {
+                      phonetic = phonetic + syllable.label_ipa;
+                    });
+                    phonetic = phonetic + '/';
+                    console.log(phonetic);
+                    setIpa(phonetic);
+                    setResult(JSON.stringify(response));
                     setResults(updatedResults);
                 })
                 .catch(err => console.error(err));
@@ -106,9 +115,10 @@ const BasicScreen = () => {
     }
 
     const addPost = () => {
-        // Use Quote Generation API to get a random 
-        setTextToRead('Show me the money.');
+      const randomItem = Config.BASIC[Math.floor(Math.random() * Config.BASIC.length)];
+        setTextToRead(randomItem);
     }
+    
 
     function getTextToRead() {
         return (
@@ -127,8 +137,12 @@ const BasicScreen = () => {
             {textToRead == '' ? null : <Button
                 title={recording ? 'Stop Recording' : 'Start Recording'}
                 onPress={recording ? stopRecording : startRecording} />}
-            {point == null ? null : <Text
-            style={{fontSize: 12, alignSelf: 'center'}}>Overall Score: {point}</Text>}
+            {result == '' ? null : <View> 
+            <Text
+            style={{fontSize: 24, alignSelf: 'center'}}>IPA: {ipa}</Text>
+            <Text
+            style={{fontSize: 24, alignSelf: 'center'}}>Overall Score: {score}</Text>
+              </View>}
             
         </View>
     );
@@ -138,7 +152,7 @@ const styles = StyleSheet.create({
     container: {
       margin: 20,
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: '#0000ff',
       alignItems: 'center',
       justifyContent: 'center',
     },
