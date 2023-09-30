@@ -13,6 +13,8 @@ const BasicScreen = () => {
     const [result, setResult] = useState([]);
     const [score, setScore] = useState({});
     const [ipa, setIpa] = useState('');
+    const [soundsLike, setSoundsLike] = useState({});
+    const [ipascore, setIpaScore] = useState({});
 
     const startRecording = async () => {
         try {
@@ -95,15 +97,25 @@ const BasicScreen = () => {
                     console.log(JSON.stringify(response));
                     updatedResults.push(response);
                     setScore(response.score);
-                    const word = response.words[0];
+                    // const word = response.words[0];
                     console.log(response.words[0]);
+                    const ipa_score_map = new Map();
                     var phonetic = '/';
-                    word.syllables.map((syllable, index) => {
+                    var sounds_like = '/';
+                    response.words[0].syllables.map((syllable, index) => {
                       phonetic = phonetic + syllable.label_ipa;
+                      syllable.phones.map((phone, idx) => {
+                        sounds_like = sounds_like + phone.sounds_like[0].label_ipa;
+                      });
+
+                      ipa_score_map.set(syllable.label_ipa, syllable.score);
                     });
                     phonetic = phonetic + '/';
+                    sounds_like = sounds_like + '/';
                     console.log(phonetic);
+                    setIpaScore(JSON.stringify([...ipa_score_map]));
                     setIpa(phonetic);
+                    setSoundsLike(sounds_like);
                     setResult(JSON.stringify(response));
                     setResults(updatedResults);
                 })
@@ -139,7 +151,11 @@ const BasicScreen = () => {
                 onPress={recording ? stopRecording : startRecording} />}
             {result == '' ? null : <View> 
             <Text
-            style={{fontSize: 24, alignSelf: 'center'}}>IPA: {ipa}</Text>
+            style={{fontSize: 24, alignSelf: 'center'}}>Expected IPA: {ipa}</Text>
+            <Text
+            style={{fontSize: 24, alignSelf: 'center'}}>Detailed Score: {ipascore}</Text>
+            <Text
+            style={{fontSize: 24, alignSelf: 'center'}}>Actual IPA: {soundsLike}</Text>
             <Text
             style={{fontSize: 24, alignSelf: 'center'}}>Overall Score: {score}</Text>
               </View>}
