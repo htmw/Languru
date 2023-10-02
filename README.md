@@ -5,7 +5,7 @@ The project is an innovative solution designed to help English learners improve 
 * Voice recognition
 * Breakdown sound to check a single word
 * Give feedback on pronunciation accuracy
-* 
+  
 ## Technology stack:
 Framework: React JS
 Database: AWS Amplify Studio
@@ -23,6 +23,7 @@ Step 2: Navigate to the src folder which contains source code of our application
 
 Step 3: type this command: “npx expo start”  in the terminal to start a development server for Languru application created with Expo. 
 
-Step 4: After execute the “npx expo start” command, the Metro Bundler will start
+Step 4: After execute the “npx expo start” command, the Metro Bundler will start.
+
 Step 5: Type “i” to open the iOS simulator and experience the Languru app.
 
