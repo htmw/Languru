@@ -7,10 +7,10 @@ The project is an innovative solution designed to help English learners improve 
 * Give feedback on pronunciation accuracy
   
 ## Technology stack:
-Framework: React JS
-Database: AWS Amplify Studio
-Code Editor: Visual Studio Code
-Language: JavaScript
+* Framework: React Native
+* Database: AWS Amplify Studio
+* Code Editor: Visual Studio Code
+* Language: JavaScript
 
 ## Deployment:
 Requirement: Make sure that your local installed the latest version of Expo, Visual Studio Code, Xcode.
