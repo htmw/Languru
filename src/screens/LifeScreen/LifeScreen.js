@@ -132,54 +132,79 @@ const LifeScreen = () => {
     
 
     function getTextToRead() {
-        return (
-          <View style={styles.row}>
-            <Text style={styles.fill}>{textToRead}</Text>
-          </View>
-        );
-      }
+      return (
+        <View style={styles.textContainer}>
+      <Text style={styles.text}>{textToRead}</Text>
+    </View>
+      );
+    }
+
     return (
-        <View >
-            <Text
-            style={{fontSize: 24, alignSelf: 'center'}}>This is screen for everyday Life Related Pronounciation.</Text>
-             <Button style={styles.button} onPress={addPost} title="Generate Random Post"></Button>
-            {getTextToRead()}
-            {textToRead == '' ? null : <Button
-                title={recording ? 'Stop Recording' : 'Start Recording'}
-                onPress={recording ? stopRecording : startRecording} />}
-            {result == '' ? null : <View> 
-            <Text
-            style={{fontSize: 24, alignSelf: 'center'}}>Expected IPA: {ipa}</Text>
-            <Text
-            style={{fontSize: 24, alignSelf: 'center'}}>Detailed Score: {ipascore}</Text>
-            <Text
-            style={{fontSize: 24, alignSelf: 'center'}}>Actual IPA: {soundsLike}</Text>
-            <Text
-            style={{fontSize: 24, alignSelf: 'center'}}>Overall Score: {score}</Text>
-              </View>}
-        </View>
+      <View style={styles.container}>
+        <Text style={styles.heading}>Life Topic Pronunciation</Text>
+        <Button
+          style={styles.button}
+          onPress={addPost}
+          title="Generate Random Post"
+        />
+        {getTextToRead()}
+        {textToRead == '' ? null : (
+          <Button
+            title={recording ? 'Stop Recording' : 'Start Recording'}
+            onPress={recording ? stopRecording : startRecording}
+            style={styles.recordButton}
+          />
+        )}
+        {result == '' ? null : (
+          <View style={styles.resultContainer}>
+            <Text style={styles.resultText}>Expected IPA: {ipa}</Text>
+            <Text style={styles.resultText}>Detailed Score: {ipascore}</Text>
+            <Text style={styles.resultText}>Actual IPA: {soundsLike}</Text>
+            <Text style={styles.resultText}>Overall Score: {score}</Text>
+          </View>
+        )}
+      </View>
     );
-}
-const styles = StyleSheet.create({
+  };
+  
+  const styles = StyleSheet.create({
     container: {
-      margin: 20,
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: '#c3bef0',
       alignItems: 'center',
       justifyContent: 'center',
     },
-    row: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    fill: {
-      flex: 1,
-      margin: 16
+    heading: {
+      fontSize: 24,
+      marginBottom: 16,
     },
     button: {
-      margin: 16
-    }
+      marginVertical: 16,
+    },
+    textContainer: {
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      backgroundColor: '#E7EAF4',
+      borderRadius: 8,
+      marginBottom: 16,
+    },
+    text: {
+      fontSize: 18,
+    },
+    recordButton: {
+      marginVertical: 16,
+    },
+    resultContainer: {
+      marginTop: 20,
+      backgroundColor: '#FAE9EA',
+      padding: 16,
+      borderRadius: 8,
+    },
+    resultText: {
+      fontSize: 18,
+      alignSelf: 'center',
+      marginBottom: 8,
+    },
   });
 
 export default LifeScreen;
