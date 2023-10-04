@@ -19,6 +19,9 @@ import WorkScreen from '../screens/WorkScreen';
 import EducationScreen from '../screens/EducationScreen';
 import HealthScreen from '../screens/HealthScreen';
 import FoodScreen from '../screens/FoodScreen';
+import QuotationScreen from '../screens/QuotationScreen';
+import QuestionScreen from '../screens/QuestionScreen';
+import ConversationScreen from '../screens/ConversationScreen';
 import { Auth } from 'aws-amplify';
 
 const Tab = createBottomTabNavigator();
@@ -86,6 +89,9 @@ export function RecordScreenNavigator() {
       <Stack.Screen name="Education" component={EducationScreen} />
       <Stack.Screen name="Health" component={HealthScreen} />
       <Stack.Screen name="Food" component={FoodScreen} />
+      <Stack.Screen name="Quotation" component={QuotationScreen} />
+      <Stack.Screen name="Question" component={QuestionScreen} />
+      <Stack.Screen name="Conversation" component={ConversationScreen} />
     </Stack.Navigator>
   );
 }

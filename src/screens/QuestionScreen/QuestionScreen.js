@@ -3,7 +3,7 @@ import {View, Text, Alert, Button, StyleSheet} from 'react-native';
 import { Audio } from 'expo-av';
 import Config from '../../../config';
 
-const BasicScreen = () => {
+const QuestionScreen = () => {
 
 
     const [textToRead, setTextToRead] = useState([]);
@@ -127,7 +127,7 @@ const BasicScreen = () => {
     }
 
     const addPost = () => {
-      const randomItem = Config.BASIC[Math.floor(Math.random() * Config.BASIC.length)];
+    const randomItem = Config.QUESTION[Math.floor(Math.random() * Config.QUESTION.length)];
         setTextToRead(randomItem);
     }
     
@@ -142,7 +142,7 @@ const BasicScreen = () => {
 
       return (
         <View style={styles.container}>
-          <Text style={styles.heading}>Basic Topic Pronunciation</Text>
+          <Text style={styles.heading}>Question Topic Pronunciation</Text>
           <Button
             style={styles.button}
             onPress={addPost}
@@ -171,7 +171,7 @@ const BasicScreen = () => {
     const styles = StyleSheet.create({
       container: {
         flex: 1,
-        backgroundColor: '#cadefc',
+        backgroundColor: '#acc6aa',
         alignItems: 'center',
         justifyContent: 'center',
       },
@@ -208,4 +208,4 @@ const BasicScreen = () => {
       },
     });
 
-export default BasicScreen;
+export default QuestionScreen;
