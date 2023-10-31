@@ -214,7 +214,7 @@ const ConversationScreen = () => {
             fontWeight:'bold'
           },
         heading: {
-          fontSize: 30,
+          fontSize: 25,
             marginBottom: 16,
             fontWeight:'bold',
             marginBottom:20

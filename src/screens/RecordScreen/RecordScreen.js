@@ -69,7 +69,8 @@ const RecordScreen = () => {
       <Text style={{ fontSize: 22, alignSelf: 'center', fontWeight: 'bold', lineHeight: 50}}>
       SELECT A TOPIC FROM THE BELOW</Text>
       
-      <CustomButton1  
+      <CustomButton1
+        
         imageSource={Basic}
         imageStyle={styles.imgsize2}
         text="Basic"

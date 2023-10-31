@@ -1,27 +1,22 @@
-import React from 'react';
-import { Video } from 'expo-av';
+import React,{useEffect} from 'react';
 import { View, Text, StyleSheet,Image } from 'react-native';
+import { Video } from 'expo-av';
 import CustomButton from '../../components/CustomButton';
 import { useFonts } from 'expo-font';
 import { useRoute } from '@react-navigation/native';
 import Logo from '../../../assets/images/Logo_3.png';
-import White from '../../../assets/Video/White.mp4';
-import Futura from '../../../assets/fonts/Futura.ttf';
+import MontserratFont from '../../../assets/fonts/Montserrat-VariableFont_wght.ttf'
 
 
-let [fontsLoaded] = useFonts({
-  'Futura':{Futura}
 
-})   
-
-const HomeScreen = ({ route}) => {
+const HomeScreen = ({ route, navigation }) => {
+ 
   return (
-     
-
+    
+    
     <View style={styles.root} >
-
-        <Video
-        source={White}
+    <Video
+        source={{ uri: 'https://drive.google.com/uc?id=1jxYZRReov1RI-4wz_9Nh7_sPoTSyN8G2' }}
         rate={1.5}
         isMuted={true}
         resizeMode="cover"
@@ -34,29 +29,26 @@ const HomeScreen = ({ route}) => {
       style={{
       width: 200,     // Set the desired width
       height: 200,    // Set the desired height
-      marginTop: -100,  // Adjust top margin
+      marginTop: 20,  // Adjust top margin
       marginLeft: 0, // Adjust left margin
           // You can also use marginRight and marginBottom for other margins
       }}
       resizeMode="contain"
       />
-      
-       <Text style={[styles.welcomeText, {lineHeight: 30, fontSize:27, marginTop: 30, fontFamily:'Futura'}]}>
+       <Text style={[styles.welcomeText, {lineHeight: 50, marginTop: 70}]}>
         Welcome to LANGURU  </Text>
 
         <Text style={[styles.welcomeText, {fontSize:45, color:'blue'}]}>
         {'\n'} {route.params.name}{'\n'} 
         </Text>
 
-        <Text style={[styles.welcomeText, {fontSize:25}]}>
+        <Text style={[styles.welcomeText]}>
         Let's help you improve your English pronunciation.
         </Text>
       
     </View>
   );
 };
-
-
 
 
 const styles = StyleSheet.create({
@@ -68,7 +60,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   welcomeText: {
-    fontFamily:'Futura',
+    //fontFamily:'Montserrat',
     fontSize: 20,
     textAlign: 'center',
     color: '#dd6e42',
@@ -82,11 +74,9 @@ const styles = StyleSheet.create({
   root: {
     
     alignItems: 'center',
-    padding: 110,
+    //padding: 110,
+    height:1000
   },
- 
 });
-
-
 
 export default HomeScreen;

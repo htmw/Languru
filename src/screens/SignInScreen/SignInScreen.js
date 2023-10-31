@@ -19,7 +19,7 @@ import {useNavigation} from '@react-navigation/native';
 import { Auth } from 'aws-amplify';
 import {useForm, Controller} from 'react-hook-form';
 import { useRoute } from "@react-navigation/native";
-import White from '../../../assets/Video/White.mp4';
+
 
 const SignInScreen = ({navigation}) => {
   const [username, setUsername] = useState();
@@ -70,7 +70,7 @@ const SignInScreen = ({navigation}) => {
       <View style={styles.root}>
 
             <Video
-        source={White}
+            source={{ uri: 'https://drive.google.com/uc?id=1jxYZRReov1RI-4wz_9Nh7_sPoTSyN8G2' }}
         rate={1.5}
         isMuted={true}
         resizeMode="cover"

@@ -1,5 +1,4 @@
 import React,{useState} from 'react';
-
 import {View, Text, Alert, Image, Pressable} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { Card, Icon } from 'react-native-elements'
@@ -17,7 +16,7 @@ import Cover from '../../../assets/Cover.jpg'
 
 const EMAIL_REGEX = /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/;
 
-const ProfileScreen = ({ route}) => {
+const ProfileScreen = ({ route, navigation }) => {
     const {control, handleSubmit} = useForm();
     const [username, onChangeUserName] = React.useState(route.params.params.userName);
     const [name, onChangeName] = React.useState(route.params.params.name);
@@ -52,66 +51,45 @@ const ProfileScreen = ({ route}) => {
     const validateEmail = (text) => {
         return EMAIL_REGEX.test(text);
     };
-    const AvatarComponent = () => {
-      return (
-        <View style={styles.avatarContainer}>
-          <Image
-            source={
-              gender === 'Male'
-                ? Male
-                : gender === 'Female'
-                ? Female
-                : Default
-            }
-            style={styles.avatar}
-          />
-        </View>
-      );
-    };
 
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
-        <Image
+      <Image
             source={Cover}
             style={styles.coverImage}
 
             />
-        <View style={styles.avatarContainer}>
-          <Image
+
+      <View style={styles.avatarContainer}>
+      <Image
             source={gender === 'Male' ? Male : gender === 'Female' ? Female : Default}
             style={styles.avatar}
           />
+<Text style={[styles.name, styles.textWithShadow]}>Welcome to my profile!</Text>
+      
         </View>
-
-        <Text style={[styles.name, styles.textWithShadow]}>Welcome to my profile!</Text>
-
-
-        </View>
-   
-                            <View style={styles.infoContainer}>
-                      <Text style={styles.infoLabel}>Name:</Text>
-                      <View style={styles.inputBox}>
-                        <TextInput
-                          style={styles.input}
-                          onChangeText={onChangeName}
-                          value={name}
-                          control={control}
-                        />
-                      </View>
-                    </View>
-
-          <View style={styles.content}>
-            <View style={styles.infoContainer}>
-              <Text style={styles.infoLabel}>Email:</Text>
-              <TextInput
-                        style={styles.input}
-                        onChangeText={onChangeEmail}
-                        value={email}
-                        control={control}
-                    />
-            </View>
-        <View style={styles.infoContainer}>
+        <View style={styles.root}>
+          <Text style={styles.nameLabel}>Name:</Text>
+          <TextInput
+                    style={styles.input}
+                    onChangeText={onChangeName}
+                    value={name}
+                    control={control}
+                />
+    
+      <View style={styles.root}>
+        {/* <View style={styles.infoContainer}> */}
+          <Text style={styles.infoLabel}>Email:</Text>
+          <TextInput
+                    style={styles.input}
+                    onChangeText={onChangeEmail}
+                    value={email}
+                    control={control}
+                />
+        {/* </View> */}
+        <View style={styles.root}>
+        {/* <View style={styles.infoContainer}> */}
           <Text style={styles.infoLabel}>Username:</Text>
           <TextInput
                     style={styles.input}
@@ -120,18 +98,17 @@ const ProfileScreen = ({ route}) => {
                     control={control}
                 />
         </View>
-        <View style={styles.infoContainer}>
-          <Text style={styles.infoLabel}>Phone Number:</Text>
+        <View style={styles.root}>
+          <Text style={styles.infoLabel}>Contact Number:</Text>
           <TextInput
-                    placeholder="+1xxxxxxxxxx"
                     style={styles.input}
                     onChangeText={onChangeNumber}
                     value={number}
                     control={control}
                 />
         </View>
-
         <View style={styles.infoContainer}>
+        <View style={styles.root}>
           <Text style={styles.infoLabel}>Gender:</Text>
            <Picker
             style={styles.input1}
@@ -142,110 +119,132 @@ const ProfileScreen = ({ route}) => {
               <Picker.Item label={option} value={option} key={index} />
             ))}
           </Picker>
+          </View>
         </View>
-
-  
-        {/* <View style={styles.infoContainer}>
+        
+        {/* <View style={styles.root}>
           <Text style={styles.infoLabel}>Bio:</Text>
-          <Text style={styles.bioText}>I have a curious mindset, and I enjoy exploring new things. 
-          Traveling to different places and experiencing new cultures fascinates me. 
-          Music is also a significant part of my life, and I find joy in discovering diverse genres 
-          and melodies.</Text>
+          <Text style={styles.infoLabel}>I have a curious mindset, and I enjoy exploring new things. Traveling to different places and experiencing new cultures fascinates me. Music is also a significant part of my life, and I find joy in discovering diverse genres and melodies.</Text>
         </View> */}
         
       </View>
      
-      <CustomButton text="Update" onPress={handleSubmit(onUpdateProfilePress)} 
-          type="CUSTOM"
-          fgColor='#000000'
-        />
-
+      <View style={styles.root}>
+       <CustomButton 
+      
+                text="Update Profile"
+                onPress={handleSubmit(onUpdateProfilePress)}
+                type="SECONDARY"
+                
+              />
+            
+        </View>
+            
+       
+    </View>
+    </View>
     </ScrollView>
   );
 };
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffebbb',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 17,
-  },
-  coverImage: {
-    height: 201,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-  },
-  avatarContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  avatar: {
-    width: 120,
-    height: 120,
-    borderRadius: 30,
-  },
-  name: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginTop: 10,
-    color: 'white',
-    marginBottom: 20,
-  },
-  content: {
-    marginTop: 15,
-    alignItems: 'center',  // Center horizontally
-  },
-  infoContainer: {
-    marginTop: 5,
-    marginBottom: 10,
-    alignItems: 'center',  // Center horizontally
-  },
-  
-  infoLabel: {
-    fontWeight: 'bold',
-    marginRight: 0,
-    alignItems: 'center',  // Center horizontally
-  },
-  infoValue: {
-    marginTop: 5,
-  },
-  inputBox: {
-    flexDirection: 'row',  // Keep this for layout
-    alignItems: 'center',  // Center horizontally
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#000',
-    borderRadius: 20,
-    padding: 10,
-    fontSize: 15,
-  },
-  input1: {
-    borderWidth: 20,
-    borderColor: '#000',
-    borderRadius: 20,
-    padding: 10,
-    fontSize: 15,
-    height: 40,
-    width:125
-  },
-   picker: {
-    flex: 1, // Take up available space
-    height: 50, // Set a reasonable height
-    width: '100%', // Take up the full width
-    color: 'black', // Set text color
-  },
-  bioText: {
-    textAlign: 'center', // Center the text horizontally
-    fontWeight: 'bold',
-  },
-});
+    container: {
+        flex: 1,
+        backgroundColor: '#84cdee',
+        padding: 20,
+        
+      },
+      coverImage: {
+        height: 201,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+      },
+      avatarContainer: {
+        alignItems: 'center',
+        marginTop: 20,
+      },
+      avatar: {
+        width: 120,
+        height: 120,
+        borderRadius: 60,
+      },
+      name: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginTop: 10,
+        color:'white',
+        marginBottom: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      nameLabel: {
+        fontWeight: 'bold',
+        //marginRight: 10, // Adjust the margin to create space between label and input
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize:22
+      },
+      content: {
+        marginTop: 20,
+      },
+      infoContainer: {
+         marginTop: 10,
+        marginBottom: 20,
+      },
+      infoLabel: {
+        fontWeight: 'bold',
+        fontSize:22
+        //marginRight: 20,
+        
+      },
+      input: {
+        borderWidth: 1,
+        borderColor: '#000',
+        borderRadius: 7,
+        padding: 5,
+        fontSize: 20,
+      },
+      infoValue: {
+        marginTop: 10,
+      },
 
-
+    row: {
+        flex: 1,
+        flexDirection: 'row',
+        textAlign: "left",
+        display: "inline-flex",
+        alignItems: "center"
+    },
+    button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        borderRadius: 4,
+        elevation: 3,
+        backgroundColor: 'pink',
+        height:50
+      },
+      root: {
+        alignItems: 'center',
+        padding: 20,
+        backgroundColor:'#84cdee',
+        
+      },
+      input1: {
+        borderWidth: 20,
+        borderColor: '#000',
+        borderRadius: 20,
+        padding: -10,
+        fontSize: 15,
+       // height: 10,
+        width:140
+      },
+  });
 
 export default ProfileScreen;
