@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
+import { Video } from 'expo-av';
+import {View, Text, StyleSheet, ScrollView, Alert,Image} from 'react-native';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import SocialSignInButtons from '../../components/SocialSignInButtons';
 import {useNavigation} from '@react-navigation/core';
 import {Auth} from 'aws-amplify';
 import {useForm} from 'react-hook-form';
+import Logo from '../../../assets/images/Logo_3.png';
+import White from '../../../assets/Video/White.mp4';
 
 const EMAIL_REGEX = /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/;
 
@@ -43,14 +46,36 @@ const SignUpScreen = () => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
+      
+      <Video
+        source={White}
+        rate={1.5}
+        isMuted={true}
+        resizeMode="cover"
+        shouldPlay
+        isLooping
+        style={StyleSheet.absoluteFillObject}
+      />
+        
+        <Image
+          source={Logo}
+          style={{
+      width: 200,     
+      height: 200,    
+      marginTop: 20,  
+      marginLeft: 0, 
+           }}
+      resizeMode="contain"
+        />
+
         <Text style={styles.title}>Create an account</Text>
 
         <CustomInput
           name="name"
           control={control}
-          placeholder="Name"
+          placeholder="Full Name"
           rules={{
             required: 'Name is required',
             minLength: {
@@ -115,6 +140,7 @@ const SignUpScreen = () => {
         <CustomButton
           text="Register"
           onPress={handleSubmit(onRegisterPressed)}
+          type="SECONDARY"
         />
 
         <Text style={styles.text}>
@@ -123,20 +149,26 @@ const SignUpScreen = () => {
             Terms of Use
           </Text>{' '}
           and{' '}
-          <Text style={styles.link} onPress={onPrivacyPressed}>
+          <Text style={styles.link} onPress={onPrivacyPressed} >
             Privacy Policy
           </Text>
+          <Text style={{marginBottom:90}}/>
         </Text>
+
+        <CustomButton
+          text="Go Back"
+          onPress={onSignInPress}
+          style={styles.buttonContainer}
+          type="TERTIARY"
+          
+        />
 
         <SocialSignInButtons />
 
-        <CustomButton
-          text="Have an account? Sign in"
-          onPress={onSignInPress}
-          type="TERTIARY"
-        />
+        
       </View>
-    </ScrollView>
+      </ScrollView>
+    
   );
 };
 
@@ -159,6 +191,17 @@ const styles = StyleSheet.create({
   link: {
     color: '#FDB075',
   },
+  // logo: {
+  //   width: '70%',
+  //   maxWidth: 300,
+  //   maxHeight: 100,
+  // },
+  // buttonContainer: {
+  //   // Set the desired height for the ScrollView
+  //   marginBottom: 10,
+  //   height:100,
+  //   width:100
+  // }
 });
 
 export default SignUpScreen;

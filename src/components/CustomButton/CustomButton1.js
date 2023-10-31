@@ -1,8 +1,12 @@
-import React from 'react';
-import {View, Text, StyleSheet, Pressable, Image, TouchableOpacity} from 'react-native';
 
-const CustomButton = ({onPress, text, type = 'PRIMARY', bgColor, fgColor,imageSource, imageStyle,
-buttonStyle }) => {
+import React, { useRef, useState } from 'react';
+import {View, Text, StyleSheet, Pressable, Image, TouchableOpacity, Animated, TouchableWithoutFeedback
+,Easing} from 'react-native';
+
+
+const CustomButton1 = ({onPress, text, type = 'PRIMARY', bgColor, fgColor,imageSource, imageStyle,
+ }) => {
+
   return (
     <Pressable
       onPress={onPress}
@@ -31,15 +35,17 @@ buttonStyle }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '65%',
-    height:'5%',
-    left:'0%',
+    width: '40%',
+    height:'8%',
+    left:'30%',
 
     padding: 15,
     marginVertical: 5,
 
     alignItems: 'center',
-    borderRadius: 5,
+    borderRadius: 12,
+    //borderColor: '1a0cd3',
+    
   },
 
   container_PRIMARY: {
@@ -47,29 +53,18 @@ const styles = StyleSheet.create({
   },
 
   container_SECONDARY: {
-    backgroundColor:'#cac1f5',
-    borderColor: '#cac1f5',
-    borderWidth: 1.5,
-    height:50,
-    width:120    
-  },
+    borderColor: '#3B71F3',
+    borderWidth: 1,
+    width:120
 
-  container_CUSTOM: {
-    backgroundColor:'#cac1f5',
-    borderColor: '#cac1f5',
-    borderWidth: 1.5,
-    height:50,
-    width:120,
-    left:135
   },
 
   container_TERTIARY: {
-    width:'90%'
         
   },
-  
+
   container_CENTER: {
-    left:'-52%',
+    left:'15.5%',
     flexDirection:'row',
     alignItems:'center',
     marginRight: 10
@@ -78,7 +73,9 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: 'bold',
     color: 'white',
+    left:'100%'
   },
+  
 
   text_SECONDARY: {
     color: '#3B71F3',
@@ -87,10 +84,13 @@ const styles = StyleSheet.create({
   text_TERTIARY: {
     color: 'gray',
   },
-  // rowContainer:{ 
-  //   flexDirection:'row',
-  //   alignItems:'center'
-  // },
+
+  rowContainer:{ 
+    flexDirection:'row',
+    alignItems:'center'
+  },
+
+  
 });
 
-export default CustomButton;
+export default CustomButton1;

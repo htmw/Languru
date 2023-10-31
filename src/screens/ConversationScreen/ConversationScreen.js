@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import {View, Text, Alert, Button, StyleSheet} from 'react-native';
+import {View, Text, Alert, Button, StyleSheet,Image, TouchableOpacity} from 'react-native';
 import { Audio } from 'expo-av';
 import Config from '../../../config';
+import MicStart from '../../../assets/images/micstart.png';
+import MicStop from '../../../assets/images/micstop.png';
+import Conversation from '../../../assets/training_images/convo.png';
+
 
 const ConversationScreen = () => {
 
@@ -142,19 +146,34 @@ const ConversationScreen = () => {
 
       return (
         <View style={styles.container}>
-          <Text style={styles.heading}>Conversation Topic Pronunciation</Text>
-          <Button
-            style={styles.button}
-            onPress={addPost}
-            title="Generate Random Post"
-          />
-          {getTextToRead()}
-          {textToRead == '' ? null : (
-            <Button
-              title={recording ? 'Stop Recording' : 'Start Recording'}
-              onPress={recording ? stopRecording : startRecording}
-              style={styles.recordButton}
-            />
+        <Text style={styles.heading}>Conversation Topic Pronunciation</Text>
+    <Image source={Conversation} style={styles.image}></Image>
+    <View style={styles.buttonContainer}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={addPost}
+      >
+        <Text style={styles.button}>GENERATE RANDOM POST</Text>
+      </TouchableOpacity>
+      </View>
+      {getTextToRead()}
+      {textToRead == '' ? null : (
+        <TouchableOpacity
+            onPress={recording ? stopRecording : startRecording}
+            style={styles.recordButton}
+          >
+            {recording ? (
+              <Image
+                source={MicStop} 
+                style={styles.recordImage}
+              />
+            ) : (
+              <Image
+                source={MicStart} 
+                style={styles.recordImage}
+              />
+            )}
+     </TouchableOpacity>
           )}
           {result == '' ? null : (
             <View style={styles.resultContainer}>
@@ -171,41 +190,71 @@ const ConversationScreen = () => {
     const styles = StyleSheet.create({
       container: {
         flex: 1,
-        backgroundColor: '#8ed6ff',
+        backgroundColor: '#8389b6',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
       },
-      heading: {
-        fontSize: 24,
-        marginBottom: 16,
-      },
-      button: {
-        marginVertical: 16,
-      },
-      textContainer: {
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-        backgroundColor: '#E7EAF4',
-        borderRadius: 8,
-        marginBottom: 16,
-      },
-      text: {
-        fontSize: 18,
-      },
-      recordButton: {
-        marginVertical: 16,
-      },
-      resultContainer: {
-        marginTop: 20,
-        backgroundColor: '#FAE9EA',
-        padding: 16,
-        borderRadius: 8,
-      },
-      resultText: {
-        fontSize: 18,
-        alignSelf: 'center',
-        marginBottom: 8,
-      },
+        row: {
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
+        fill: {
+          flex: 1,
+          margin: 16
+        },
+        button: {
+          marginVertical: 10,
+            fontSize:15,
+            color:'#090905',
+            backgroundColor: '#f4eb5a', // Background color
+            padding: 5, // Padding around the button text
+            borderRadius: 5,
+            alignItems:'center',
+            fontWeight:'bold'
+          },
+        heading: {
+          fontSize: 30,
+            marginBottom: 16,
+            fontWeight:'bold',
+            marginBottom:20
+        },
+        image:{
+          marginBottom:100,
+          height:50,
+          width:50
+        },
+        buttonContainer: {
+          marginBottom: 80,
+          width:200,
+          height:100
+        },
+        textContainer: {
+          paddingHorizontal: 16,
+          paddingVertical: 8,
+          backgroundColor: '#E7EAF4',
+          borderRadius: 8,
+          marginBottom: 16,
+          width:350,
+          alignItems:'center'
+        },
+        recordButton: {
+          marginVertical: 16,
+        },
+        recordImage:{
+          height:55,
+          width:45
+        },
+        text: {
+          fontSize: 18,
+        },
+        resultContainer: {
+          marginTop: 20,
+          backgroundColor: '#FAE9EA',
+          padding: 16,
+          borderRadius: 8,
+        },
+    
     });
 
 export default ConversationScreen;

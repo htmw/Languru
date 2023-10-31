@@ -4,9 +4,11 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import SocialSignInButtons from '../../components/SocialSignInButtons';
 import {useNavigation} from '@react-navigation/core';
+import {useForm} from 'react-hook-form';
 
 const ForgotPasswordScreen = () => {
   const [username, setUsername] = useState('');
+  const {control, handleSubmit} = useForm();
 
   const navigation = useNavigation();
 
@@ -32,12 +34,13 @@ const ForgotPasswordScreen = () => {
           }}
         />
 
-        <CustomButton text="Send" onPress={handleSubmit(onSendPressed)} />
+        <CustomButton text="Send" onPress={handleSubmit(onSendPressed)}
+        type="SECONDARY" />
 
         <CustomButton
           text="Back to Sign in"
           onPress={onSignInPress}
-          type="TERTIARY"
+          type="SECONDARY"
         />
       </View>
     </ScrollView>

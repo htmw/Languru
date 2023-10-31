@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
-import {View, Text, Alert, Button, StyleSheet} from 'react-native';
+import {View, Text, Alert, Button, StyleSheet,Image,TouchableOpacity} from 'react-native';
 import Config from '../../../config';
 import { Audio } from 'expo-av';
+import MicStart from '../../../assets/images/micstart.png';
+import MicStop from '../../../assets/images/micstop.png';
+import Work from '../../../assets/training_images/work.png';
 
 const WorkScreen = () => {
     const [textToRead, setTextToRead] = useState([]);
@@ -121,20 +124,42 @@ const WorkScreen = () => {
   
       function getTextToRead() {
           return (
-            <View style={styles.row}>
-              <Text style={styles.fill}>{textToRead}</Text>
+            <View style={styles.textContainer}>
+      <Text style={styles.text}>{textToRead}</Text>
             </View>
           );
         }
     return (
-        <View >
-            <Text
-            style={{fontSize: 24, alignSelf: 'center'}}>This is screen for Work Related Pronounciation.</Text>
-            <Button style={styles.button} onPress={addPost} title="Generate Random Post"></Button>
-            {getTextToRead()}
-            {textToRead == '' ? null : <Button
-                title={recording ? 'Stop Recording' : 'Start Recording'}
-                onPress={recording ? stopRecording : startRecording} />}
+        <View style={styles.container}>
+            <Text style={styles.heading}>Work Topic Pronunciation</Text>
+        <Image source={Work} style={styles.image}></Image>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={addPost}
+          >
+            <Text style={styles.button}>GENERATE RANDOM POST</Text>
+          </TouchableOpacity>
+          </View>
+          {getTextToRead()}
+          {textToRead == '' ? null : (
+            <TouchableOpacity
+                onPress={recording ? stopRecording : startRecording}
+                style={styles.recordButton}
+              >
+                {recording ? (
+                  <Image
+                    source={MicStop} 
+                    style={styles.recordImage}
+                  />
+                ) : (
+                  <Image
+                    source={MicStart} 
+                    style={styles.recordImage}
+                  />
+                )}
+         </TouchableOpacity>
+         )}
             {result == '' ? null : <View> 
             <Text
             style={{fontSize: 24, alignSelf: 'center'}}>IPA: {ipa}</Text>
@@ -145,13 +170,12 @@ const WorkScreen = () => {
     );
 }
 const styles = StyleSheet.create({
-    container: {
-      margin: 20,
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#b4d6d7',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
     row: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -162,7 +186,49 @@ const styles = StyleSheet.create({
       margin: 16
     },
     button: {
-      margin: 16
-    }
+      marginVertical: 10,
+        fontSize:15,
+        color:'#090905',
+        backgroundColor: '#f4eb5a', // Background color
+        padding: 5, // Padding around the button text
+        borderRadius: 5,
+        alignItems:'center',
+        fontWeight:'bold'
+      },
+    heading: {
+      fontSize: 30,
+        marginBottom: 16,
+        fontWeight:'bold',
+        marginBottom:20
+    },
+    image:{
+      marginBottom:100,
+      height:50,
+      width:50
+    },
+    buttonContainer: {
+      marginBottom: 80,
+      width:200,
+      height:100
+    },
+    textContainer: {
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      backgroundColor: '#E7EAF4',
+      borderRadius: 8,
+      marginBottom: 16,
+      width:175,
+      alignItems:'center'
+    },
+    recordButton: {
+      marginVertical: 16,
+    },
+    recordImage:{
+      height:55,
+      width:45
+    },
+    text: {
+      fontSize: 18,
+    },
   });
 export default WorkScreen;
