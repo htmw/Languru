@@ -54,6 +54,9 @@ const RecordScreen = () => {
   const onConversationButtonPress = () => {
     navigation.navigate('Conversation');
   };
+  const onStartQuizButtonPress = () => {
+    navigation.navigate('Quiz');
+  };
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 24, alignSelf: 'center' }}>Select a topic below</Text>
@@ -93,7 +96,7 @@ const RecordScreen = () => {
         bgColor="#e3e3e3"
         fgColor="#363636"
       />
-      <Text style={{ fontSize: 24, alignSelf: 'center' }}>Choose Advance Practice</Text>
+      <Text style={{ fontSize: 24, alignSelf: 'center' }}>Advance Practice 📚</Text>
       <CustomButton
         text="Quotation"
         onPress={onQuotationButtonPress}
@@ -111,6 +114,13 @@ const RecordScreen = () => {
         onPress={onConversationButtonPress}
         bgColor="#e3e3e3"
         fgColor="#363636"
+      />
+      <Text style={{ fontSize: 24, alignSelf: 'center' }}>Pronunciation Quiz 💡</Text>
+      <CustomButton
+        text="Start Quiz"
+        onPress={onStartQuizButtonPress}
+        bgColor="#E7EAF4"
+        fgColor="#4765A9"
       />
     </View>
   );
