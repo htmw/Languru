@@ -22,6 +22,7 @@ import FoodScreen from '../screens/FoodScreen';
 import QuotationScreen from '../screens/QuotationScreen';
 import QuestionScreen from '../screens/QuestionScreen';
 import ConversationScreen from '../screens/ConversationScreen';
+import QuizScreen from '../screens/Quiz';
 import { Auth } from 'aws-amplify';
 
 const Tab = createBottomTabNavigator();
@@ -92,6 +93,7 @@ export function RecordScreenNavigator() {
       <Stack.Screen name="Quotation" component={QuotationScreen} />
       <Stack.Screen name="Question" component={QuestionScreen} />
       <Stack.Screen name="Conversation" component={ConversationScreen} />
+      <Stack.Screen name="Quiz" component={QuizScreen} />
     </Stack.Navigator>
   );
 }

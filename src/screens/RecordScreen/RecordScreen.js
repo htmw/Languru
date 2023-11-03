@@ -64,10 +64,14 @@ const RecordScreen = () => {
   const onConversationButtonPress = () => {
     navigation.navigate('Conversation');
   };
+
+  const onStartQuizButtonPress = () => {
+    navigation.navigate('Quiz');
+  };
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 22, alignSelf: 'center', fontWeight: 'bold', lineHeight: 50}}>
-      SELECT A TOPIC FROM THE BELOW</Text>
+      <Text style={{ fontSize: 22, alignSelf: 'center', fontWeight: 'bold', lineHeight: 30}}>
+      SELECT A TOPIC BELOW</Text>
       
       <CustomButton1
         
@@ -126,7 +130,7 @@ const RecordScreen = () => {
         imageSource={Food}
         imageStyle={styles.imgsize2}
       />
-      <Text style={{ fontSize: 22, alignSelf: 'center',fontWeight: 'bold',lineHeight: 50 }}>
+      <Text style={{ fontSize: 22, alignSelf: 'center',fontWeight: 'bold',lineHeight: 20 }}>
       CHOOSE ADVANCE PRACTICE</Text>
       <CustomButton1
         text="Quotation"
@@ -156,6 +160,19 @@ const RecordScreen = () => {
         imageSource={Convo}
         imageStyle={styles.imgsize4}
       />
+
+      <CustomButton1
+         text="Start Quiz"
+         onPress={onStartQuizButtonPress}
+        //  bgColor="#E7EAF4"
+        //  fgColor="#4765A9"
+        bgColor="yellow"
+        fgColor="black"
+        type='CENTER'
+        imageSource={Convo}
+        imageStyle={styles.imgsize4}
+       />
+      
     </View>
   );
 };
