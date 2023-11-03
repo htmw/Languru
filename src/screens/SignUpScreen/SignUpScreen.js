@@ -43,14 +43,14 @@ const SignUpScreen = () => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    
       <View style={styles.root}>
         <Text style={styles.title}>Create an account</Text>
 
         <CustomInput
           name="name"
           control={control}
-          placeholder="Name"
+          placeholder="Full Name"
           rules={{
             required: 'Name is required',
             minLength: {
@@ -115,6 +115,7 @@ const SignUpScreen = () => {
         <CustomButton
           text="Register"
           onPress={handleSubmit(onRegisterPressed)}
+          type="SECONDARY"
         />
 
         <Text style={styles.text}>
@@ -128,15 +129,18 @@ const SignUpScreen = () => {
           </Text>
         </Text>
 
+        <CustomButton
+          text="Go Back"
+          onPress={onSignInPress}
+          style={styles.buttonContainer}
+          type="TERTIARY"
+          
+        />
         <SocialSignInButtons />
 
-        <CustomButton
-          text="Have an account? Sign in"
-          onPress={onSignInPress}
-          type="TERTIARY"
-        />
+        
       </View>
-    </ScrollView>
+    
   );
 };
 
@@ -145,6 +149,7 @@ const styles = StyleSheet.create({
   root: {
     alignItems: 'center',
     padding: 20,
+    height:1200
   },
   title: {
     fontSize: 24,

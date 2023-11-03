@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {View, Text, StyleSheet, Pressable, Image, TouchableOpacity} from 'react-native';
 
-const CustomButton = ({onPress, text, type = 'PRIMARY', bgColor, fgColor}) => {
+const CustomButton = ({onPress, text, type = 'PRIMARY', bgColor, fgColor,imageSource, imageStyle,
+buttonStyle }) => {
   return (
     <Pressable
       onPress={onPress}
@@ -10,21 +11,29 @@ const CustomButton = ({onPress, text, type = 'PRIMARY', bgColor, fgColor}) => {
         styles[`container_${type}`],
         bgColor ? {backgroundColor: bgColor} : {},
       ]}>
+      <Image source={imageSource} style={imageStyle} resizeMode="contain" />
       <Text
         style={[
           styles.text,
           styles[`text_${type}`],
           fgColor ? {color: fgColor} : {},
+          
+          
         ]}>
         {text}
       </Text>
+      
     </Pressable>
+    
+    
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: '65%',
+    height:'5%',
+    left:'0%',
 
     padding: 15,
     marginVertical: 5,
@@ -38,11 +47,33 @@ const styles = StyleSheet.create({
   },
 
   container_SECONDARY: {
-    borderColor: '#3B71F3',
-    borderWidth: 2,
+    backgroundColor:'#cac1f5',
+    borderColor: '#cac1f5',
+    borderWidth: 1.5,
+    height:50,
+    width:120    
   },
 
-  container_TERTIARY: {},
+  container_CUSTOM: {
+    backgroundColor:'#cac1f5',
+    borderColor: '#cac1f5',
+    borderWidth: 1.5,
+    height:50,
+    width:120,
+    left:135
+  },
+
+  container_TERTIARY: {
+    width:'90%'
+        
+  },
+  
+  container_CENTER: {
+    left:'-52%',
+    flexDirection:'row',
+    alignItems:'center',
+    marginRight: 10
+},
 
   text: {
     fontWeight: 'bold',
@@ -56,6 +87,10 @@ const styles = StyleSheet.create({
   text_TERTIARY: {
     color: 'gray',
   },
+  // rowContainer:{ 
+  //   flexDirection:'row',
+  //   alignItems:'center'
+  // },
 });
 
 export default CustomButton;

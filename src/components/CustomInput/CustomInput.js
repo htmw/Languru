@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
+import {View, Text, Image, TextInput, StyleSheet} from 'react-native';
 import {Controller} from 'react-hook-form';
 
 const CustomInput = ({
@@ -8,6 +8,8 @@ const CustomInput = ({
   rules = {},
   placeholder,
   secureTextEntry,
+  imageSource,
+  imageStyle
 }) => {
   return (
     <Controller
@@ -20,7 +22,9 @@ const CustomInput = ({
             style={[
               styles.container,
               {borderColor: error ? 'red' : '#e8e8e8'},
+              { flexDirection: 'row', alignItems: 'center' }
             ]}>
+            <Image source={imageSource} style={imageStyle} resizeMode="contain" />
             <TextInput
               value={value}
               onChangeText={onChange}
@@ -42,10 +46,10 @@ const CustomInput = ({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    width: '100%',
+    width: '95%',
 
     borderColor: '#e8e8e8',
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 5,
     height: 50,
 

@@ -1,7 +1,11 @@
 import React, {useState} from 'react';
-import {View, Text, Alert, Button, StyleSheet} from 'react-native';
+import {View, Text, Alert, Button, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Config from '../../../config';
 import { Audio } from 'expo-av';
+import MicStart from '../../../assets/images/micstart.png';
+import MicStop from '../../../assets/images/micstop.png';
+import Life from '../../../assets/training_images/life.png';
+
 
 const LifeScreen = () => {
 
@@ -142,18 +146,33 @@ const LifeScreen = () => {
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>Life Topic Pronunciation</Text>
-        <Button
-          style={styles.button}
-          onPress={addPost}
-          title="Generate Random Post"
-        />
-        {getTextToRead()}
-        {textToRead == '' ? null : (
-          <Button
-            title={recording ? 'Stop Recording' : 'Start Recording'}
-            onPress={recording ? stopRecording : startRecording}
-            style={styles.recordButton}
-          />
+        <Image source={Life} style={styles.image}></Image>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={addPost}
+          >
+            <Text style={styles.button}>GENERATE RANDOM POST</Text>
+          </TouchableOpacity>
+          </View>
+          {getTextToRead()}
+          {textToRead == '' ? null : (
+            <TouchableOpacity
+                onPress={recording ? stopRecording : startRecording}
+                style={styles.recordButton}
+              >
+                {recording ? (
+                  <Image
+                    source={MicStop} 
+                    style={styles.recordImage}
+                  />
+                ) : (
+                  <Image
+                    source={MicStart} 
+                    style={styles.recordImage}
+                  />
+                )}
+         </TouchableOpacity>
         )}
         {result == '' ? null : (
           <View style={styles.resultContainer}>
@@ -170,16 +189,35 @@ const LifeScreen = () => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#c3bef0',
+      backgroundColor: '#f8a7f9',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
+    },
+    image:{
+      marginBottom:100,
+      height:50,
+      width:50
     },
     heading: {
-      fontSize: 24,
-      marginBottom: 16,
+      fontSize: 30,
+        marginBottom: 16,
+        fontWeight:'bold',
+        marginBottom:20
     },
     button: {
-      marginVertical: 16,
+      marginVertical: 10,
+        fontSize:15,
+        color:'#090905',
+        backgroundColor: '#f4eb5a', // Background color
+        padding: 5, // Padding around the button text
+        borderRadius: 5,
+        alignItems:'center',
+        fontWeight:'bold'
+      },
+    buttonContainer: {
+      marginBottom: 80,
+      width:200,
+      height:100
     },
     textContainer: {
       paddingHorizontal: 16,
@@ -187,12 +225,18 @@ const LifeScreen = () => {
       backgroundColor: '#E7EAF4',
       borderRadius: 8,
       marginBottom: 16,
+      width:175,
+      alignItems:'center'
     },
     text: {
       fontSize: 18,
     },
     recordButton: {
       marginVertical: 16,
+    },
+    recordImage:{
+      height:55,
+      width:45
     },
     resultContainer: {
       marginTop: 20,

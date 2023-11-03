@@ -1,12 +1,18 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {View, Text, Alert, Image, Pressable} from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { Card, Icon } from 'react-native-elements'
 import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import {useForm} from 'react-hook-form';
 import {Auth} from 'aws-amplify';
 import CustomInput from '../../components/CustomInput';
-import CustomButton from '../../components/CustomButton';
+import CustomButton from '../../components/CustomButton/index';
+import { ScrollView } from 'react-native';
+import Male from '../../../assets/male.png'
+import Female from '../../../assets/female.png'
+import Default from '../../../assets/default.png'
+import Cover from '../../../assets/Cover.jpg'
 
 const EMAIL_REGEX = /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/;
 
@@ -16,6 +22,8 @@ const ProfileScreen = ({ route, navigation }) => {
     const [name, onChangeName] = React.useState(route.params.params.name);
     const [email, onChangeEmail] = React.useState(route.params.params.email);
     const [number, onChangeNumber] = React.useState(route.params.params.phone_number);
+    const [gender, setGender] = useState('Male');
+    const genderOptions = ['Male', 'Female', 'Other'];
 
     const onUpdateProfilePress = async () => {
         console.log(username);
@@ -45,22 +53,23 @@ const ProfileScreen = ({ route, navigation }) => {
     };
 
     return (
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
-     <Image
-        source={{ uri: 'https://www.bootdey.com/image/900x400/FF7F50/000000' }}
-        style={styles.coverImage}
+      <Image
+            source={Cover}
+            style={styles.coverImage}
 
-        />
+            />
 
       <View style={styles.avatarContainer}>
       <Image
-        source={require('../../../assets/avatar.png')} 
-        style={styles.avatar}
-      />
+            source={gender === 'Male' ? Male : gender === 'Female' ? Female : Default}
+            style={styles.avatar}
+          />
 <Text style={[styles.name, styles.textWithShadow]}>Welcome to my profile!</Text>
-
+      
         </View>
-   
+        <View style={styles.root}>
           <Text style={styles.nameLabel}>Name:</Text>
           <TextInput
                     style={styles.input}
@@ -69,8 +78,8 @@ const ProfileScreen = ({ route, navigation }) => {
                     control={control}
                 />
     
-      <View style={styles.content}>
-        <View style={styles.infoContainer}>
+      <View style={styles.root}>
+        {/* <View style={styles.infoContainer}> */}
           <Text style={styles.infoLabel}>Email:</Text>
           <TextInput
                     style={styles.input}
@@ -78,8 +87,9 @@ const ProfileScreen = ({ route, navigation }) => {
                     value={email}
                     control={control}
                 />
-        </View>
-        <View style={styles.infoContainer}>
+        {/* </View> */}
+        <View style={styles.root}>
+        {/* <View style={styles.infoContainer}> */}
           <Text style={styles.infoLabel}>Username:</Text>
           <TextInput
                     style={styles.input}
@@ -88,8 +98,8 @@ const ProfileScreen = ({ route, navigation }) => {
                     control={control}
                 />
         </View>
-        <View style={styles.infoContainer}>
-          <Text style={styles.infoLabel}>number:</Text>
+        <View style={styles.root}>
+          <Text style={styles.infoLabel}>Contact Number:</Text>
           <TextInput
                     style={styles.input}
                     onChangeText={onChangeNumber}
@@ -97,20 +107,43 @@ const ProfileScreen = ({ route, navigation }) => {
                     control={control}
                 />
         </View>
-        
         <View style={styles.infoContainer}>
+        <View style={styles.root}>
+          <Text style={styles.infoLabel}>Gender:</Text>
+           <Picker
+            style={styles.input1}
+            selectedValue={gender}
+            onValueChange={(itemValue, itemIndex) => setGender(itemValue)}
+             >
+            {genderOptions.map((option, index) => (
+              <Picker.Item label={option} value={option} key={index} />
+            ))}
+          </Picker>
+          </View>
+        </View>
+        
+        {/* <View style={styles.root}>
           <Text style={styles.infoLabel}>Bio:</Text>
           <Text style={styles.infoLabel}>I have a curious mindset, and I enjoy exploring new things. Traveling to different places and experiencing new cultures fascinates me. Music is also a significant part of my life, and I find joy in discovering diverse genres and melodies.</Text>
-        </View>
+        </View> */}
         
       </View>
      
-      <CustomButton
+      <View style={styles.root}>
+       <CustomButton 
+      
                 text="Update Profile"
                 onPress={handleSubmit(onUpdateProfilePress)}
-            />
+                type="SECONDARY"
+                
+              />
+            
+        </View>
+            
        
     </View>
+    </View>
+    </ScrollView>
   );
 };
 
@@ -118,7 +151,7 @@ const ProfileScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ffebbb',
+        backgroundColor: '#84cdee',
         padding: 20,
         
       },
@@ -150,10 +183,11 @@ const styles = StyleSheet.create({
       },
       nameLabel: {
         fontWeight: 'bold',
-        marginRight: 10, // Adjust the margin to create space between label and input
+        //marginRight: 10, // Adjust the margin to create space between label and input
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        fontSize:22
       },
       content: {
         marginTop: 20,
@@ -164,8 +198,16 @@ const styles = StyleSheet.create({
       },
       infoLabel: {
         fontWeight: 'bold',
-        marginRight: 20,
+        fontSize:22
+        //marginRight: 20,
         
+      },
+      input: {
+        borderWidth: 1,
+        borderColor: '#000',
+        borderRadius: 7,
+        padding: 5,
+        fontSize: 20,
       },
       infoValue: {
         marginTop: 10,
@@ -186,6 +228,22 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         elevation: 3,
         backgroundColor: 'pink',
+        height:50
+      },
+      root: {
+        alignItems: 'center',
+        padding: 20,
+        backgroundColor:'#84cdee',
+        
+      },
+      input1: {
+        borderWidth: 20,
+        borderColor: '#000',
+        borderRadius: 20,
+        padding: -10,
+        fontSize: 15,
+       // height: 10,
+        width:140
       },
   });
 

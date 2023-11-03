@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import {View, Text, Alert, Button, StyleSheet} from 'react-native';
+import {View,Image, Text, Alert, Button, StyleSheet,TouchableOpacity} from 'react-native';
 import { Audio } from 'expo-av';
 import Config from '../../../config';
+import MicStart from '../../../assets/images/micstart.png';
+import MicStop from '../../../assets/images/micstop.png';
+import Basic from '../../../assets/training_images/basic.png';
 
 const BasicScreen = () => {
 
@@ -143,18 +146,33 @@ const BasicScreen = () => {
       return (
         <View style={styles.container}>
           <Text style={styles.heading}>Basic Topic Pronunciation</Text>
-          <Button
+          <Image source={Basic} style={styles.image}></Image>
+          <View style={styles.buttonContainer}>
+          <TouchableOpacity
             style={styles.button}
             onPress={addPost}
-            title="Generate Random Post"
-          />
+          >
+            <Text style={styles.button}>GENERATE RANDOM POST</Text>
+          </TouchableOpacity>
+          </View>
           {getTextToRead()}
           {textToRead == '' ? null : (
-            <Button
-              title={recording ? 'Stop Recording' : 'Start Recording'}
-              onPress={recording ? stopRecording : startRecording}
-              style={styles.recordButton}
-            />
+            <TouchableOpacity
+                onPress={recording ? stopRecording : startRecording}
+                style={styles.recordButton}
+              >
+                {recording ? (
+                  <Image
+                    source={MicStop} 
+                    style={styles.recordImage}
+                  />
+                ) : (
+                  <Image
+                    source={MicStart} 
+                    style={styles.recordImage}
+                  />
+                )}
+         </TouchableOpacity>
           )}
           {result == '' ? null : (
             <View style={styles.resultContainer}>
@@ -171,16 +189,34 @@ const BasicScreen = () => {
     const styles = StyleSheet.create({
       container: {
         flex: 1,
-        backgroundColor: '#cadefc',
+        backgroundColor: '#bf9bd9',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
       },
       heading: {
-        fontSize: 24,
+        fontSize: 30,
         marginBottom: 16,
+        fontWeight:'bold',
+        marginBottom:20
+      },
+      image:{
+        marginBottom:100
       },
       button: {
-        marginVertical: 16,
+        marginVertical: 10,
+        fontSize:15,
+        color:'#090905',
+        backgroundColor: '#f4eb5a', // Background color
+        padding: 5, // Padding around the button text
+        borderRadius: 5,
+        alignItems:'center',
+        fontWeight:'bold'
+        },
+
+      buttonContainer: {
+        marginBottom: 80,
+        width:200,
+        height:100
       },
       textContainer: {
         paddingHorizontal: 16,
@@ -188,6 +224,8 @@ const BasicScreen = () => {
         backgroundColor: '#E7EAF4',
         borderRadius: 8,
         marginBottom: 16,
+        width:175,
+        alignItems:'center'
       },
       text: {
         fontSize: 18,
@@ -206,6 +244,10 @@ const BasicScreen = () => {
         alignSelf: 'center',
         marginBottom: 8,
       },
+      recordImage:{
+        height:55,
+        width:45
+      }
     });
 
 export default BasicScreen;
