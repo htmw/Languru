@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
       display: 'flex',
       flexDirection: 'column',
       marginBottom: 250,
-      width:'75%'
+      width:'65%'
       
     },
   });
