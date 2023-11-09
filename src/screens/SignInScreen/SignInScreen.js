@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,  useEffect, useRef} from 'react';
 import { Video } from 'expo-av';
 import {
   View,
@@ -9,6 +9,7 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
+import { Modal,ActivityIndicator,Animated} from 'react-native';
 import Logo from '../../../assets/images/Logo_3.png';
 import Uicon from '../../../assets/images/UnameIcon.png'
 import PWicon from '../../../assets/images/PwordIcon.png'
@@ -29,6 +30,24 @@ const SignInScreen = ({navigation}) => {
   const {height} = useWindowDimensions();
   // const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ]),
+    ).start();
+  }, [fadeAnim]);
 
 
   const onSignInPressed = async data => {
@@ -68,6 +87,21 @@ const SignInScreen = ({navigation}) => {
   return (
     
       <View style={styles.root}>
+        <Modal
+          transparent={true}
+          animationType={'fade'}
+          visible={loading}
+          onRequestClose={() => { console.log('close modal')}}>
+          <View style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#00000040'
+          }}>
+            <ActivityIndicator animating={loading} color="#35A7FF" size="large" />
+            <Animated.Text style={{color: '#fff', opacity: fadeAnim, marginTop: 10}}>Signing In</Animated.Text>
+          </View>
+        </Modal>
 
             <Video
             source={{ uri: 'https://drive.google.com/uc?id=1jxYZRReov1RI-4wz_9Nh7_sPoTSyN8G2' }}

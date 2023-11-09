@@ -148,7 +148,7 @@ const QuizScreen = () => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fbf2d5',
+      backgroundColor: '#ef617e',
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -164,12 +164,14 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     questionSection: {
+      flex:1,
       width: '100%',
       position: 'relative',
       alignItems: 'center'
     },
     questionCount: {
-      marginBottom: 20,
+      
+      marginTop: 50,
     },
     questionCountText: {
       fontSize: 28,
@@ -179,10 +181,13 @@ const styles = StyleSheet.create({
       marginBottom: 12,
     },
     answerSection: {
-      width: '100%',
+      flex:.5,
+      justifyContent: 'space-between',
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'space-between',
+      marginBottom: 250,
+      width:'65%'
+      
     },
   });
 export default QuizScreen;

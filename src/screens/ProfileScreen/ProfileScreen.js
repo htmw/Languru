@@ -17,6 +17,14 @@ import Cover from '../../../assets/Cover.jpg'
 const EMAIL_REGEX = /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/;
 
 const ProfileScreen = ({ route, navigation }) => {
+  const onSignOutPressed = async () => {
+    try {
+      await Auth.signOut();
+      navigation.replace('SignIn');
+    } catch (e) {
+      Alert.alert('Error', e.message);
+    }
+  };
     const {control, handleSubmit} = useForm();
     const [username, onChangeUserName] = React.useState(route.params.params.userName);
     const [name, onChangeName] = React.useState(route.params.params.name);
@@ -139,6 +147,13 @@ const ProfileScreen = ({ route, navigation }) => {
               />
             
         </View>
+        <View style={styles.root2}>
+        <CustomButton
+        text="Sign Out"
+        onPress={onSignOutPressed}
+        type="CUSTOM"
+      />
+      </View>
             
        
     </View>
@@ -232,6 +247,13 @@ const styles = StyleSheet.create({
       },
       root: {
         alignItems: 'center',
+        padding: 20,
+        backgroundColor:'#84cdee',
+        
+      },
+      root2: {
+        alignItems: 'center',
+        marginRight:270,
         padding: 20,
         backgroundColor:'#84cdee',
         
