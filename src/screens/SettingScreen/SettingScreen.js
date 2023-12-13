@@ -6,7 +6,9 @@ import {
   StyleSheet,
   useWindowDimensions,
   ScrollView,
-  Alert,Linking
+  Animated,
+  Alert,
+  Linking
 } from 'react-native';
 import Logo from '../../../assets/images/Logo_1.png';
 import CustomInput from '../../components/CustomInput';
@@ -17,6 +19,19 @@ import { Auth } from 'aws-amplify';
 import {useForm, Controller} from 'react-hook-form';
 
 const SettingScreen = ({ route, navigation }) => {
+  const [fadeAnim] = useState(new Animated.Value(0))  // Initial value for opacity: 0
+
+  useEffect(() => {
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue: 1,
+        duration: 2000,
+        useNativeDriver: true
+      }
+    ).start();
+  }, [fadeAnim])
+
   const onSignOutPressed = async () => {
     try {
       await Auth.signOut();
@@ -31,30 +46,29 @@ const SettingScreen = ({ route, navigation }) => {
     Linking.openURL(url);
   };
     return (
-
-      
-         <View>
-
-          <View style={styles.root}>
+    <View>
+        
+          <Animated.View style={{ ...styles.root, opacity: fadeAnim}}>
         <CustomButton
         text="Sign Out"
         onPress={onSignOutPressed}
         type="CUSTOM"
+        style={styles.signOutButton}
       />
-      </View>
+      </Animated.View>
 
       <View>
       <Text style={{fontSize: 20, alignSelf: 'center'}}>For more information on the app, click on the below 
       button. </Text>
       </View>
 
-      <View style={styles.root1}>
+      <Animated.View style={{ ...styles.root1, opacity: fadeAnim }}>
         <CustomButton
         text="Click Here"
         onPress={clickURL}
         type="CUSTOM"
       />
-      </View>
+      </Animated.View>
         </View>
 
         
@@ -76,7 +90,11 @@ const styles = StyleSheet.create({
    // backgroundColor:'#84cdee',
     
   },
-
+  signOutButton: {
+    backgroundColor: '#ff0000', 
+    borderRadius: 5, 
+    padding: 10, 
+  },
 
 })
 
