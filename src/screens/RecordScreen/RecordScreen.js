@@ -69,7 +69,7 @@ const RecordScreen = () => {
     navigation.navigate('Quiz');
   };
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={{ fontSize: 22, alignSelf: 'center', fontWeight: 'bold', lineHeight: 22}}>
       SELECT A TOPIC BELOW</Text>
       
@@ -173,7 +173,7 @@ const RecordScreen = () => {
         imageStyle={styles.imgsize4}
        />
       
-    </View>
+    </ScrollView>
   );
 };
 
@@ -184,7 +184,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   text:{
-    left: '20%'
+    left: '20%',
+    
   },
 
   imgsize:{
@@ -192,15 +193,15 @@ const styles = StyleSheet.create({
   },
   imgsize2:{
     width:'25%',
-    left:'20%'
+    alignSelf: 'center'
   },
   imgsize3:{
     width:'22%',
-    left:'20%'
+    alignSelf: 'center'
   },
   imgsize4:{
     width:'20%',
-    left:'20%'
+    left:'40%'
   },
 });
 
