@@ -184,24 +184,23 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   text:{
-    left: '20%',
+    left: '30%',
     
   },
 
   imgsize:{
-    width:'35%'
+    width:'100%'
   },
   imgsize2:{
-    width:'25%',
+    width:'100%',
     alignSelf: 'center'
   },
   imgsize3:{
-    width:'22%',
+    width:'100%',
     alignSelf: 'center'
   },
   imgsize4:{
-    width:'20%',
-    left:'40%'
+    width:'100%',
   },
 });
 
