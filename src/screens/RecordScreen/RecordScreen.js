@@ -24,6 +24,7 @@ import Convo from '../../../assets/training_images/convo.png'
 import { useNavigation } from '@react-navigation/native';
 import { Auth } from 'aws-amplify';
 import { useForm, Controller } from 'react-hook-form';
+import Quiz from '../../../assets/training_images/quiz.png'
 
 const RecordScreen = () => {
   const navigation = useNavigation();
@@ -110,7 +111,7 @@ const RecordScreen = () => {
         type='CENTER'
         fgColor="#ffffff"
         imageSource={Education}
-        imageStyle={styles.imgsize2}
+        imageStyle={styles.imgsize21}
       />
       <CustomButton1
         text="Health"
@@ -119,7 +120,7 @@ const RecordScreen = () => {
         fgColor="#ffffff"
         type='CENTER'
         imageSource={Health}
-        imageStyle={styles.imgsize2}
+        imageStyle={styles.imgsize21}
       />
       <CustomButton1
         text="Food"
@@ -128,7 +129,7 @@ const RecordScreen = () => {
         fgColor="#ffffff"
         type='CENTER'
         imageSource={Food}
-        imageStyle={styles.imgsize2}
+        imageStyle={styles.imgsize21}
       />
       <Text style={{ fontSize: 22, alignSelf: 'center',fontWeight: 'bold',lineHeight: 30 }}>
       CHOOSE ADVANCE PRACTICE</Text>
@@ -161,15 +162,15 @@ const RecordScreen = () => {
         imageStyle={styles.imgsize4}
       />
 
-      <CustomButton1
+<CustomButton1
          text="Start Quiz"
          onPress={onStartQuizButtonPress}
         //  bgColor="#E7EAF4"
         //  fgColor="#4765A9"
-        bgColor="yellow"
+        bgColor="#ef617e"
         fgColor="black"
         type='CENTER'
-        imageSource={Convo}
+        imageSource={Quiz}
         imageStyle={styles.imgsize4}
        />
       
@@ -192,15 +193,25 @@ const styles = StyleSheet.create({
     width:'100%'
   },
   imgsize2:{
-    width:'100%',
-    alignSelf: 'center'
+    //width:'100%',
+    height:'200%',
+    right:'300%'
+  },
+  imgsize21:{
+    //width:'100%',
+    height:'205%',
+    right:'270%'
   },
   imgsize3:{
-    width:'100%',
-    alignSelf: 'center'
+    //width:'80%',
+    height:'250%',
+    alignSelf: 'center',
+    right:'350%'
   },
   imgsize4:{
-    width:'100%',
+    //width:'100%',
+    height: '250%',
+    right:'300%'
   },
 });
 
