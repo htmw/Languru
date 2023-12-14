@@ -1,0 +1,1 @@
+model.fit(audio_data, binary_labels, epochs=10, batch_size=32)

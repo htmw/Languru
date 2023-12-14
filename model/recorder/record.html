@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Languru Audio Recorder and Downloader</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f2f2f2;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+    
+            h1 {
+                color: #333;
+                text-align: center;
+            }
+    
+            button {
+                background-color: #333;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                cursor: pointer;
+                font-size: 16px;
+                border-radius: 20px;
+                margin-top: 20px;
+            }
+    
+            button[disabled] {
+                background-color: #ccc; /* Disable appearance */
+                cursor: not-allowed; /* Disable cursor */
+            }
+    
+            audio {
+                width: 100%;
+                max-width: 300px;
+                margin-top: 20px;
+                border-radius: 20px;
+                /* display: none; Hide by default */
+            }
+    
+            a {
+                text-decoration: none;
+            }
+    
+            a#downloadLink {
+                /* display: none; */
+                margin-top: 20px;
+            }
+
+            /* Style for the dropdown */
+            select {
+                padding: 5px;
+                font-size: 25px;
+                width: 200px; /* Adjust the width as needed */
+                font-weight: bold;
+                border-radius: 10px;
+                text-align: center;
+            }
+
+            left-column {
+
+                /* left: 0; */
+                background-color: #f2f2f2;
+                overflow-y: auto; /* Add a scrollbar if needed */
+            }
+
+            /* Style for the audio blobs */
+            .audio-blob {
+                margin-bottom: 10px;
+            }
+
+            .x{
+                color: #ce4d4d;
+            }
+
+            .x:hover{
+                cursor: pointer;
+            }
+
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.1);
+                }
+                100% {
+                    transform: scale(1);
+                }
+            }
+        </style>
+    </head>
+    <body>
+
+        <div style="position: absolute; top: 10px; left: 20px; width: 40%;">
+            <div class="left-column", id='audioList'>
+                <!-- Audio blobs will be added here -->
+            </div>
+        </div>
+        
+
+        <div style="position: absolute; top: 20px; right: 20px;">
+            <select id="dropdown">
+                <option value="the">the</option>
+                <option value="be">be</option>
+                <option value="to">to</option>
+                <option value="of">of</option>
+                <option value="and">and</option>
+                <option value="a">a</option>
+                <option value="in">in</option>
+                <option value="that">that</option>
+                <option value="have">have</option>
+                <option value="I">I</option>
+                <option value="it">it</option>
+                <option value="for">for</option>
+                <option value="not">not</option>
+                <option value="on">on</option>
+                <option value="with">with</option>
+                <option value="he">he</option>
+                <option value="as">as</option>
+                <option value="you">you</option>
+                <option value="do">do</option>
+                <option value="at">at</option>
+                <option value="this">this</option>
+                <option value="but">but</option>
+                <option value="his">his</option>
+                <option value="by">by</option>
+                <option value="from">from</option>
+                <option value="they">they</option>
+                <option value="we">we</option>
+                <option value="say">say</option>
+                <option value="her">her</option>
+                <option value="she">she</option>
+                <option value="or">or</option>
+                <option value="an">an</option>
+                <option value="will">will</option>
+                <option value="my">my</option>
+                <option value="one">one</option>
+                <option value="all">all</option>
+                <option value="would">would</option>
+                <option value="there">there</option>
+                <option value="their">their</option>
+                <option value="what">what</option>
+                <option value="so">so</option>
+                <option value="up">up</option>
+                <option value="out">out</option>
+                <option value="if">if</option>
+                <option value="about">about</option>
+                <option value="who">who</option>
+                <option value="get">get</option>
+                <option value="which">which</option>
+                <option value="go">go</option>
+                <option value="me">me</option>
+                <option value="when">when</option>
+                <option value="make">make</option>
+                <option value="can">can</option>
+                <option value="like">like</option>
+                <option value="time">time</option>
+                <option value="no">no</option>
+                <option value="just">just</option>
+                <option value="him">him</option>
+                <option value="know">know</option>
+                <option value="take">take</option>
+                <option value="people">people</option>
+                <option value="into">into</option>
+                <option value="year">year</option>
+                <option value="your">your</option>
+                <option value="good">good</option>
+                <option value="some">some</option>
+                <option value="could">could</option>
+                <option value="them">them</option>
+                <option value="see">see</option>
+                <option value="other">other</option>
+                <option value="than">than</option>
+                <option value="then">then</option>
+                <option value="now">now</option>
+                <option value="look">look</option>
+                <option value="only">only</option>
+                <option value="come">come</option>
+                <option value="its">its</option>
+                <option value="over">over</option>
+                <option value="think">think</option>
+                <option value="also">also</option>
+                <option value="back">back</option>
+                <option value="after">after</option>
+                <option value="use">use</option>
+                <option value="two">two</option>
+                <option value="how">how</option>
+                <option value="our">our</option>
+                <option value="work">work</option>
+                <option value="first">first</option>
+                <option value="well">well</option>
+                <option value="way">way</option>
+                <option value="even">even</option>
+                <option value="new">new</option>
+                <option value="want">want</option>
+                <option value="because">because</option>
+                <option value="any">any</option>
+                <option value="these">these</option>
+                <option value="give">give</option>
+                <option value="day">day</option>
+                <option value="most">most</option>
+                <option value="us">us</option>
+            </select>
+            
+        </div>
+
+        
+
+        <h1>Audio Recorder and Uploader</h1>
+
+        <button id="startRecord" class="not-recording">Start</button>
+
+        <audio id="audioPlayer" controls></audio>
+
+        <button disabled id="addToCorrectList">Add to Correct List</button></a>
+        <button disabled id="addToIncorrectList">Add to Incorrect List</button></a>
+
+        <a id="downloadLink" download="recording.wav"><button disabled id="downloadAudio">Download</button></a>
+
+        <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let audioList = [];
+
+        const startRecordButton = document.getElementById('startRecord');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const downloadLink = document.getElementById('downloadLink');
+        const downloadAudioButton = document.getElementById('downloadAudio');
+        const addToCorrectListButton = document.getElementById('addToCorrectList');
+        const addToIncorrectListButton = document.getElementById('addToIncorrectList');
+
+
+        audioPlayer.onended = function() {
+            startRecordButton.disabled = false;
+            downloadAudioButton.disabled = false;
+        };
+
+        // Initialize media recorder and start recording
+        startRecordButton.addEventListener('click', async () => {
+            if (!mediaRecorder) {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        audioChunks.push(event.data);
+                    }
+                };
+
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    audioPlayer.src = URL.createObjectURL(audioBlob);
+                    startRecordButton.classList.remove('recording');
+                    downloadAudioButton.disabled = false;
+                    addToCorrectListButton.disabled = false;
+                    addToIncorrectListButton.disabled = false;
+                };
+            }
+
+            if (mediaRecorder.state === 'inactive') {
+                audioChunks = [];
+                startRecordButton.innerHTML = 'Stop'
+                startRecordButton.style.backgroundColor = '#ce4d4d'
+                mediaRecorder.start();
+                startRecordButton.classList.add('recording');
+            } else {
+                startRecordButton.innerHTML = 'Start'
+                startRecordButton.style.backgroundColor = '#333'
+                mediaRecorder.stop();
+                startRecordButton.classList.remove('recording');
+            }
+        });
+
+            // Add an event listener to the dropdown to update the header with the selected value
+            const dropdown = document.getElementById('dropdown');
+
+            dropdown.addEventListener('change', () => {
+                downloadAudioButton.disabled = true;
+                addToCorrectListButton.disabled = true;
+                addToIncorrectListButton.disabled = true;
+                const selectedValue = dropdown.value;
+                const parentElement = document.getElementById('audioList');
+                while (parentElement.firstChild) {
+                    parentElement.removeChild(parentElement.firstChild);
+                }
+                audioList = [];
+            });
+
+            // Update the downloaded audio file name based on the dropdown choice
+            downloadAudioButton.addEventListener('click', () => {
+                if (audioList.length === 0) {
+                    alert('No audio files to download.');
+                    return;
+                }
+
+                const zip = new JSZip();
+                const selectedValue = dropdown.value;
+
+                audioList.forEach((audioObject, index) => {
+                    // Create a unique filename for each audio file
+                    console.log(audioObject);
+                    const filename = `${selectedValue}_${audioObject.isCorrect}_${index}.wav`;
+                    zip.file(filename, fetch(audioObject.src).then(response => response.blob()));
+                });
+
+                // Generate the zip file and trigger the download
+                zip.generateAsync({ type: 'blob' }).then(function (content) {
+                    const zipBlob = new Blob([content]);
+                    const zipURL = URL.createObjectURL(zipBlob);
+
+                    // Trigger the download
+                    const link = document.createElement('a');
+                    link.href = zipURL;
+                    link.download = `${selectedValue}_audio.zip`;
+                    link.click();
+                });
+            });
+
+            addToCorrectListButton.addEventListener('click', () => {
+                addToCorrectListButton.disabled = true;
+                addToIncorrectListButton.disabled = true;
+                audioList.push({ src: audioPlayer.src, isCorrect: true });
+                createAudioBlobber(audioPlayer.src, true);
+            });
+
+            addToIncorrectListButton.addEventListener('click', () => {
+                addToCorrectListButton.disabled = true;
+                addToIncorrectListButton.disabled = true;
+                audioPlayer.src.correct = false;
+                audioList.push({ src: audioPlayer.src, isCorrect: false });                
+                createAudioBlobber(audioPlayer.src, false);
+            })
+
+            function createAudioBlobber(src, correct){
+                const num = Math.floor(Math.random() * 10000);
+                const wrapper = document.createElement('div');
+                const audioBlob = document.createElement('audio');
+                wrapper.style.display = 'flex'
+
+                const x = document.createElement('h3');
+                x.innerHTML = 'x'
+                x.style.paddingTop = '15px'
+                x.className = 'x'
+
+                const index = document.createElement('h3');
+                index.innerHTML = audioList.length;
+                index.style.paddingTop = '16px'
+                index.className = 'x'
+                if(correct){
+                    index.style.color = '#118554'
+                }
+                else{
+                    index.style.color = '#ce4d4d'
+                }
+                        
+
+                audioBlob.controls = true;
+                audioBlob.src = src;
+
+                wrapper.appendChild(index);
+                wrapper.appendChild(audioBlob);
+                wrapper.appendChild(x)
+
+                const parentElement = document.getElementById('audioList');
+                parentElement.appendChild(wrapper);
+                audioPlayer.src = ''
+
+                x.addEventListener('click', () => {
+                    parentElement.removeChild(wrapper);
+                    audioList = audioList.filter(item => item.src !== src);
+                }); 
+            }
+        </script>
+    </body>
+</html>
+
+
